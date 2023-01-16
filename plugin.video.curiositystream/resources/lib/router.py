@@ -233,6 +233,9 @@ class Router(object):
         stream = self._cs_api.media_stream_info(media)
         play_item = xbmcgui.ListItem(path=stream["streams"][0]["master_playlist_url"])
         play_item.setSubtitles([c["file"] for c in stream["subtitles"]])
+
+        play_item.setProperty('inputstream', 'inputstream.adaptive')
+        play_item.setProperty('inputstream.adaptive.manifest_type', 'mpd')
         xbmcplugin.setResolvedUrl(self._plugin_handle, True, listitem=play_item)
 
     def _change_watchlist(self, media_id, is_bookmarked, is_collection):

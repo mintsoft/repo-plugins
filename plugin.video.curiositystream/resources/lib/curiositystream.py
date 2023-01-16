@@ -145,7 +145,8 @@ class CuriosityStream(object):
                 raise CSAuthFailed("Login attempt failed")
             data = response.json()
             self._session.headers.update(
-                {"x-auth-token": data["message"]["auth_token"]}
+                {"x-auth-token": data["message"]["auth_token"],
+				"User-Agent": 'Mozilla/5.0'}
             )
             self._save_session()
 
@@ -493,7 +494,7 @@ class CuriosityStream(object):
             "streams": [
                 encoding
                 for encoding in data["data"]["encodings"]
-                if encoding["type"] == "hd"
+                if str(encoding["type"]).lower() == "hd"
             ],
             "subtitles": data["data"]["closed_captions"]
             if "closed_captions" in data["data"]
